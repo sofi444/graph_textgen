@@ -3,6 +3,7 @@ from utils import DataHandler, CharacterTokenizer, WordTokenizer
 from graph import Graph
 
 import os
+import random
 
 dev = True
 
@@ -34,7 +35,10 @@ start_token = tokenizer.encode('I')[0]
 text = [start_token]
 current_token = start_token
 for i in range(100):
-    next_token = max(transition_probabilities[current_token], key=transition_probabilities[current_token].get)
+    weights = transition_probabilities[current_token]
+    #next_token = max(weights, key=weights.get)
+    # introduce randomness
+    next_token = random.choices(list(weights.keys()), weights=list(weights.values()))[0]
     text.append(next_token)
     current_token = next_token
 
